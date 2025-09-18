@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Crop Advisory System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-seedling"></i>
+                <span>CropAdvisor</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#dashboard" class="nav-link" data-page="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#chatbot" class="nav-link" data-page="chatbot">
+                    <i class="fas fa-robot"></i>
+                    <span>AI Assistant</span>
+                </a>
+                <a href="#market" class="nav-link" data-page="market">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Market Prices</span>
+                </a>
+                <a href="#pest-detection" class="nav-link" data-page="pest-detection">
+                    <i class="fas fa-bug"></i>
+                    <span>Pest Detection</span>
+                </a>
+                <a href="#settings" class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="nav-toggle" id="navToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">Smart Crop Advisory System</h1>
+                        <p class="hero-subtitle">Empowering farmers with AI-driven insights for better crop management, pest detection, and market intelligence.</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="showPage('dashboard')">
+                                <i class="fas fa-rocket"></i>
+                                Get Started
+                            </button>
+                            <button class="btn btn-secondary" onclick="showPage('chatbot')">
+                                <i class="fas fa-comments"></i>
+                                Ask AI Assistant
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="hero-illustration">
+                            <i class="fas fa-seedling hero-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <div class="container">
+                    <h2 class="section-title">Our Features</h2>
+                    <div class="features-grid">
+                        <div class="feature-card" data-aos="fade-up">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>AI Crop Advisory</h3>
+                            <p>Get personalized recommendations for your crops based on soil conditions, weather, and growth stage.</p>
+                        </div>
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="feature-icon">
+                                <i class="fas fa-bug"></i>
+                            </div>
+                            <h3>Pest Detection</h3>
+                            <p>Upload crop images to identify pests and diseases with AI-powered analysis and treatment suggestions.</p>
+                        </div>
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Market Prices</h3>
+                            <p>Stay updated with real-time market prices and trends to make informed selling decisions.</p>
+                        </div>
+                        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                            <div class="feature-icon">
+                                <i class="fas fa-cloud-sun"></i>
+                            </div>
+                            <h3>Weather Insights</h3>
+                            <p>Get accurate weather forecasts and alerts to plan your farming activities effectively.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Page -->
+        <section id="dashboard" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Your personalized farming insights</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card weather-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-cloud-sun"></i> Weather Today</h3>
+                        </div>
+                        <div class="weather-content">
+                            <div class="weather-main">
+                                <div class="temperature">28°C</div>
+                                <div class="weather-desc">Partly Cloudy</div>
+                            </div>
+                            <div class="weather-details">
+                                <div class="weather-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Humidity: 65%</span>
+                                </div>
+                                <div class="weather-item">
+                                    <i class="fas fa-wind"></i>
+                                    <span>Wind: 12 km/h</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card recommendations-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-lightbulb"></i> Today's Recommendations</h3>
+                        </div>
+                        <div class="recommendations-list">
+                            <div class="recommendation-item priority-high">
+                                <div class="rec-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                                <div class="rec-content">
+                                    <h4>Pest Alert</h4>
+                                    <p>Check tomato plants for aphids. Apply neem oil spray.</p>
+                                </div>
+                            </div>
+                            <div class="recommendation-item priority-medium">
+                                <div class="rec-icon"><i class="fas fa-tint"></i></div>
+                                <div class="rec-content">
+                                    <h4>Irrigation</h4>
+                                    <p>Water wheat crops early morning. Soil moisture is low.</p>
+                                </div>
+                            </div>
+                            <div class="recommendation-item priority-low">
+                                <div class="rec-icon"><i class="fas fa-leaf"></i></div>
+                                <div class="rec-content">
+                                    <h4>Fertilizer</h4>
+                                    <p>Apply nitrogen fertilizer to corn in 3 days.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card market-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> Market Prices</h3>
+                        </div>
+                        <div class="market-prices">
+                            <div class="price-item">
+                                <span class="crop-name">Wheat</span>
+                                <span class="price">₹2,150/quintal</span>
+                                <span class="change positive">+2.5%</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="crop-name">Rice</span>
+                                <span class="price">₹1,890/quintal</span>
+                                <span class="change negative">-1.2%</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="crop-name">Tomato</span>
+                                <span class="price">₹45/kg</span>
+                                <span class="change positive">+5.8%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card alerts-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bell"></i> Alerts & Notifications</h3>
+                        </div>
+                        <div class="alerts-list">
+                            <div class="alert-item">
+                                <i class="fas fa-cloud-rain alert-icon"></i>
+                                <div class="alert-content">
+                                    <h4>Rain Expected</h4>
+                                    <p>Heavy rainfall predicted tomorrow. Postpone spraying.</p>
+                                    <span class="alert-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="alert-item">
+                                <i class="fas fa-thermometer-half alert-icon"></i>
+                                <div class="alert-content">
+                                    <h4>Temperature Alert</h4>
+                                    <p>High temperature expected. Increase irrigation frequency.</p>
+                                    <span class="alert-time">5 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chatbot Page -->
+        <section id="chatbot" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>AI Crop Assistant</h1>
+                    <p>Ask questions about your crops in your preferred language</p>
+                </div>
+
+                <div class="chatbot-container">
+                    <div class="chat-header">
+                        <div class="chat-controls">
+                            <select id="languageSelect" class="language-select">
+                                <option value="en">English</option>
+                                <option value="hi">हिंदी</option>
+                                <option value="te">తెలుగు</option>
+                                <option value="ta">தமிழ்</option>
+                            </select>
+                            <button class="voice-btn" id="voiceBtn">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm your AI crop assistant. How can I help you today?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-questions">
+                        <h3>Quick Questions</h3>
+                        <div class="quick-buttons">
+                            <button class="quick-btn" onclick="sendQuickMessage('What fertilizer should I use for tomatoes?')">
+                                <i class="fas fa-leaf"></i>
+                                Fertilizer for Tomatoes
+                            </button>
+                            <button class="quick-btn" onclick="sendQuickMessage('How to control pests in wheat?')">
+                                <i class="fas fa-bug"></i>
+                                Pest Control
+                            </button>
+                            <button class="quick-btn" onclick="sendQuickMessage('Best time to plant rice?')">
+                                <i class="fas fa-clock"></i>
+                                Planting Time
+                            </button>
+                            <button class="quick-btn" onclick="sendQuickMessage('Soil preparation tips')">
+                                <i class="fas fa-seedling"></i>
+                                Soil Preparation
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-container">
+                        <div class="chat-input">
+                            <input type="text" id="messageInput" placeholder="Type your question here..." />
+                            <button class="send-btn" id="sendBtn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Prices Page -->
+        <section id="market" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Market Prices</h1>
+                    <p>Real-time crop prices and market trends</p>
+                </div>
+
+                <div class="market-controls">
+                    <div class="market-filters">
+                        <select id="cropFilter" class="filter-select">
+                            <option value="all">All Crops</option>
+                            <option value="cereals">Cereals</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                        </select>
+                        <select id="regionFilter" class="filter-select">
+                            <option value="all">All Regions</option>
+                            <option value="north">North India</option>
+                            <option value="south">South India</option>
+                            <option value="west">West India</option>
+                            <option value="east">East India</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="market-content">
+                    <div class="price-chart-container">
+                        <h3>Price Trends</h3>
+                        <canvas id="priceChart"></canvas>
+                    </div>
+
+                    <div class="price-table-container">
+                        <h3>Current Prices</h3>
+                        <div class="price-table">
+                            <div class="table-header">
+                                <div class="table-cell">Crop</div>
+                                <div class="table-cell">Price</div>
+                                <div class="table-cell">Change</div>
+                                <div class="table-cell">Market</div>
+                            </div>
+                            <div class="table-row">
+                                <div class="table-cell">
+                                    <i class="fas fa-seedling crop-icon"></i>
+                                    Wheat
+                                </div>
+                                <div class="table-cell">₹2,150/quintal</div>
+                                <div class="table-cell positive">+2.5%</div>
+                                <div class="table-cell">Delhi</div>
+                            </div>
+                            <div class="table-row">
+                                <div class="table-cell">
+                                    <i class="fas fa-seedling crop-icon"></i>
+                                    Rice
+                                </div>
+                                <div class="table-cell">₹1,890/quintal</div>
+                                <div class="table-cell negative">-1.2%</div>
+                                <div class="table-cell">Mumbai</div>
+                            </div>
+                            <div class="table-row">
+                                <div class="table-cell">
+                                    <i class="fas fa-apple-alt crop-icon"></i>
+                                    Tomato
+                                </div>
+                                <div class="table-cell">₹45/kg</div>
+                                <div class="table-cell positive">+5.8%</div>
+                                <div class="table-cell">Bangalore</div>
+                            </div>
+                            <div class="table-row">
+                                <div class="table-cell">
+                                    <i class="fas fa-carrot crop-icon"></i>
+                                    Onion
+                                </div>
+                                <div class="table-cell">₹32/kg</div>
+                                <div class="table-cell negative">-3.1%</div>
+                                <div class="table-cell">Pune</div>
+                            </div>
+                            <div class="table-row">
+                                <div class="table-cell">
+                                    <i class="fas fa-seedling crop-icon"></i>
+                                    Corn
+                                </div>
+                                <div class="table-cell">₹1,750/quintal</div>
+                                <div class="table-cell positive">+1.8%</div>
+                                <div class="table-cell">Hyderabad</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pest Detection Page -->
+        <section id="pest-detection" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Pest & Disease Detection</h1>
+                    <p>Upload crop images for AI-powered pest identification</p>
+                </div>
+
+                <div class="detection-container">
+                    <div class="upload-section">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <h3>Upload Crop Image</h3>
+                                <p>Drag and drop an image or click to browse</p>
+                                <input type="file" id="imageInput" accept="image/*" hidden>
+                                <button class="btn btn-primary" onclick="document.getElementById('imageInput').click()">
+                                    Choose Image
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="image-preview" id="imagePreview" style="display: none;">
+                            <img id="previewImg" src="/placeholder.svg" alt="Preview">
+                            <div class="preview-actions">
+                                <button class="btn btn-primary" id="analyzeBtn">
+                                    <i class="fas fa-search"></i>
+                                    Analyze Image
+                                </button>
+                                <button class="btn btn-secondary" id="removeBtn">
+                                    <i class="fas fa-trash"></i>
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="analysis-progress" id="analysisProgress" style="display: none;">
+                            <div class="progress-content">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <h3>Analyzing Image...</h3>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                </div>
+                                <p id="progressText">Initializing AI analysis...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <h3>Detection Results</h3>
+                        <div class="result-card">
+                            <div class="result-header">
+                                <div class="pest-info">
+                                    <h4 id="pestName">Aphids</h4>
+                                    <div class="confidence-score">
+                                        <span>Confidence: </span>
+                                        <span id="confidenceScore">92%</span>
+                                    </div>
+                                </div>
+                                <div class="severity-badge" id="severityBadge">
+                                    <span>Moderate</span>
+                                </div>
+                            </div>
+
+                            <div class="result-content">
+                                <div class="result-section-item">
+                                    <h5><i class="fas fa-info-circle"></i> Description</h5>
+                                    <p id="pestDescription">Small, soft-bodied insects that feed on plant sap, causing yellowing and curling of leaves.</p>
+                                </div>
+
+                                <div class="result-section-item">
+                                    <h5><i class="fas fa-shield-alt"></i> Treatment Options</h5>
+                                    <div class="treatment-tabs">
+                                        <button class="tab-btn active" onclick="showTreatment('organic')">Organic</button>
+                                        <button class="tab-btn" onclick="showTreatment('chemical')">Chemical</button>
+                                    </div>
+                                    <div class="treatment-content">
+                                        <div id="organicTreatment" class="treatment-option active">
+                                            <ul>
+                                                <li>Spray neem oil solution (2-3ml per liter of water)</li>
+                                                <li>Use insecticidal soap spray</li>
+                                                <li>Introduce ladybugs as natural predators</li>
+                                                <li>Remove affected leaves manually</li>
+                                            </ul>
+                                        </div>
+                                        <div id="chemicalTreatment" class="treatment-option">
+                                            <ul>
+                                                <li>Apply Imidacloprid 17.8% SL @ 0.3ml/liter</li>
+                                                <li>Use Thiamethoxam 25% WG @ 0.2g/liter</li>
+                                                <li>Spray during early morning or evening</li>
+                                                <li>Follow safety precautions and PHI period</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="result-section-item">
+                                    <h5><i class="fas fa-exclamation-triangle"></i> Prevention Tips</h5>
+                                    <ul id="preventionTips">
+                                        <li>Maintain proper plant spacing for air circulation</li>
+                                        <li>Remove weeds that harbor pests</li>
+                                        <li>Monitor plants regularly for early detection</li>
+                                        <li>Use reflective mulch to deter aphids</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Page -->
+        <section id="settings" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Settings</h1>
+                    <p>Customize your experience</p>
+                </div>
+
+                <div class="settings-container">
+                    <div class="settings-section">
+                        <h3><i class="fas fa-palette"></i> Appearance</h3>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Theme</h4>
+                                <p>Choose between light and dark mode</p>
+                            </div>
+                            <div class="setting-control">
+                                <div class="theme-options">
+                                    <button class="theme-option active" data-theme="light">
+                                        <i class="fas fa-sun"></i>
+                                        Light
+                                    </button>
+                                    <button class="theme-option" data-theme="dark">
+                                        <i class="fas fa-moon"></i>
+                                        Dark
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3><i class="fas fa-language"></i> Language & Region</h3>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Language</h4>
+                                <p>Select your preferred language</p>
+                            </div>
+                            <div class="setting-control">
+                                <select class="setting-select">
+                                    <option value="en">English</option>
+                                    <option value="hi">हिंदी (Hindi)</option>
+                                    <option value="te">తెలుగు (Telugu)</option>
+                                    <option value="ta">தமிழ் (Tamil)</option>
+                                    <option value="bn">বাংলা (Bengali)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Region</h4>
+                                <p>Set your farming region for localized advice</p>
+                            </div>
+                            <div class="setting-control">
+                                <select class="setting-select">
+                                    <option value="north">North India</option>
+                                    <option value="south">South India</option>
+                                    <option value="west">West India</option>
+                                    <option value="east">East India</option>
+                                    <option value="central">Central India</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Farming Details</h3>
+                        <div class="farming-details-section">
+                            <h4>Location & Crop Information</h4>
+                            <p>Provide your farming details for personalized recommendations</p>
+                            
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="stateSelect">State</label>
+                                    <select id="stateSelect" class="form-select">
+                                        <option value="">Select State</option>
+                                        <option value="andhra-pradesh">Andhra Pradesh</option>
+                                        <option value="telangana">Telangana</option>
+                                        <option value="karnataka">Karnataka</option>
+                                        <option value="tamil-nadu">Tamil Nadu</option>
+                                        <option value="maharashtra">Maharashtra</option>
+                                        <option value="punjab">Punjab</option>
+                                        <option value="haryana">Haryana</option>
+                                        <option value="uttar-pradesh">Uttar Pradesh</option>
+                                        <option value="madhya-pradesh">Madhya Pradesh</option>
+                                        <option value="rajasthan">Rajasthan</option>
+                                        <option value="gujarat">Gujarat</option>
+                                        <option value="west-bengal">West Bengal</option>
+                                        <option value="bihar">Bihar</option>
+                                        <option value="odisha">Odisha</option>
+                                        <option value="jharkhand">Jharkhand</option>
+                                        <option value="chhattisgarh">Chhattisgarh</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="districtSelect">District</label>
+                                    <select id="districtSelect" class="form-select">
+                                        <option value="">Select District</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="soilTypeSelect">Soil Type</label>
+                                    <select id="soilTypeSelect" class="form-select">
+                                        <option value="">Select Soil Type</option>
+                                        <option value="alluvial">Alluvial Soil</option>
+                                        <option value="black">Black Soil (Regur)</option>
+                                        <option value="red">Red Soil</option>
+                                        <option value="laterite">Laterite Soil</option>
+                                        <option value="desert">Desert Soil</option>
+                                        <option value="mountain">Mountain Soil</option>
+                                        <option value="saline">Saline Soil</option>
+                                        <option value="peaty">Peaty Soil</option>
+                                        <option value="forest">Forest Soil</option>
+                                        <option value="clayey">Clayey Soil</option>
+                                        <option value="sandy">Sandy Soil</option>
+                                        <option value="loamy">Loamy Soil</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="previousCropSelect">Previous Crop</label>
+                                    <select id="previousCropSelect" class="form-select">
+                                        <option value="">Select Previous Crop</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="wheat">Wheat</option>
+                                        <option value="maize">Maize/Corn</option>
+                                        <option value="sugarcane">Sugarcane</option>
+                                        <option value="cotton">Cotton</option>
+                                        <option value="soybean">Soybean</option>
+                                        <option value="groundnut">Groundnut</option>
+                                        <option value="sunflower">Sunflower</option>
+                                        <option value="mustard">Mustard</option>
+                                        <option value="chickpea">Chickpea</option>
+                                        <option value="pigeon-pea">Pigeon Pea</option>
+                                        <option value="black-gram">Black Gram</option>
+                                        <option value="green-gram">Green Gram</option>
+                                        <option value="lentil">Lentil</option>
+                                        <option value="tomato">Tomato</option>
+                                        <option value="onion">Onion</option>
+                                        <option value="potato">Potato</option>
+                                        <option value="cabbage">Cabbage</option>
+                                        <option value="cauliflower">Cauliflower</option>
+                                        <option value="brinjal">Brinjal</option>
+                                        <option value="okra">Okra</option>
+                                        <option value="chilli">Chilli</option>
+                                        <option value="fallow">Fallow Land</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="farmSizeSelect">Farm Size</label>
+                                    <select id="farmSizeSelect" class="form-select">
+                                        <option value="">Select Farm Size</option>
+                                        <option value="marginal">Marginal (< 1 hectare)</option>
+                                        <option value="small">Small (1-2 hectares)</option>
+                                        <option value="semi-medium">Semi-medium (2-4 hectares)</option>
+                                        <option value="medium">Medium (4-10 hectares)</option>
+                                        <option value="large">Large (> 10 hectares)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="irrigationSelect">Irrigation Type</label>
+                                    <select id="irrigationSelect" class="form-select">
+                                        <option value="">Select Irrigation Type</option>
+                                        <option value="rainfed">Rainfed</option>
+                                        <option value="canal">Canal Irrigation</option>
+                                        <option value="tube-well">Tube Well</option>
+                                        <option value="drip">Drip Irrigation</option>
+                                        <option value="sprinkler">Sprinkler Irrigation</option>
+                                        <option value="flood">Flood Irrigation</option>
+                                        <option value="mixed">Mixed</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 1.5rem;">
+                                <button class="btn btn-primary" onclick="saveFarmingDetails()">
+                                    <i class="fas fa-save"></i>
+                                    Save Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3><i class="fas fa-bell"></i> Notifications</h3>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Weather Alerts</h4>
+                                <p>Get notified about weather changes</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Pest Alerts</h4>
+                                <p>Receive notifications about pest outbreaks</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Market Price Updates</h4>
+                                <p>Get updates on crop price changes</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3><i class="fas fa-user"></i> Profile</h3>
+                        <div class="profile-section">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="profile-info">
+                                <h4>Farmer Name</h4>
+                                <p>farmer@example.com</p>
+                                <button class="btn btn-secondary">Edit Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
