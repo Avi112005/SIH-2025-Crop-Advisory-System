@@ -27,7 +27,7 @@ export function Navigation() {
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <Sprout className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold text-primary">CropAdvisor</span>
+          <span className="text-xl font-bold text-primary">Krishi Mitra</span>
         </div>
 
         {/* Desktop Navigation */}

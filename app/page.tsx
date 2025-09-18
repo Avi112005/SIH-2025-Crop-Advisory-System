@@ -228,7 +228,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <Sprout className="h-6 w-6 text-primary" />
-              <span className="text-lg font-bold text-primary">CropAdvisor</span>
+              <span className="text-lg font-bold text-primary">Krishi Mitra</span>
             </div>
             <p className="text-sm text-muted-foreground text-center">
               © 2024 Smart Crop Advisory System. Empowering farmers with AI technology.
