@@ -1,8 +1,14 @@
+"use client"
+
+import type React from "react"
+
+import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   Droplets,
   Wind,
@@ -17,20 +23,274 @@ import {
   Leaf,
   DollarSign,
   MessageCircle,
+  Send,
 } from "lucide-react"
 import Link from "next/link"
 
+const stateDistrictData = {
+  Rajasthan: ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Bikaner", "Ajmer", "Alwar"],
+  Punjab: ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Mohali"],
+  Haryana: ["Gurgaon", "Faridabad", "Hisar", "Panipat", "Karnal", "Ambala"],
+  "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi", "Meerut", "Allahabad"],
+  Maharashtra: ["Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad", "Solapur"],
+  Gujarat: ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar"],
+  "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain", "Sagar"],
+  Karnataka: ["Bangalore", "Mysore", "Hubli", "Mangalore", "Belgaum", "Gulbarga"],
+  "Andhra Pradesh": ["Hyderabad", "Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool"],
+  "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Tirunelveli"],
+}
+
+const soilTypes = [
+  "Alluvial Soil",
+  "Black Soil (Regur)",
+  "Red Soil",
+  "Laterite Soil",
+  "Desert Soil",
+  "Mountain Soil",
+  "Saline Soil",
+  "Peaty Soil",
+  "Forest Soil",
+  "Sandy Soil",
+  "Clay Soil",
+  "Loamy Soil",
+]
+
+const cropOptions = [
+  "Wheat",
+  "Rice",
+  "Cotton",
+  "Sugarcane",
+  "Maize",
+  "Barley",
+  "Jowar",
+  "Bajra",
+  "Ragi",
+  "Arhar",
+  "Moong",
+  "Urad",
+  "Chana",
+  "Masoor",
+  "Groundnut",
+  "Mustard",
+  "Sunflower",
+  "Soybean",
+  "Sesame",
+  "Potato",
+  "Onion",
+  "Tomato",
+  "Brinjal",
+  "Okra",
+  "Cabbage",
+  "Cauliflower",
+  "Carrot",
+  "Radish",
+]
+
 export default function DashboardPage() {
+  const [formData, setFormData] = useState({
+    state: "",
+    district: "",
+    soilType: "",
+    previousCrop: "",
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [dashboardData, setDashboardData] = useState({
+    location: "Rajasthan, India",
+    crops: ["Wheat", "Rice", "Cotton"],
+    recommendations: [
+      {
+        crop: "Wheat Field - Block A",
+        advice: "Apply nitrogen fertilizer (20kg/acre). Soil moisture is optimal for nutrient absorption.",
+        priority: "High Priority",
+        color: "green",
+      },
+      {
+        crop: "Rice Field - Block B",
+        advice: "Reduce irrigation by 30%. Expected rainfall in next 2 days will provide sufficient water.",
+        priority: "Medium Priority",
+        color: "blue",
+      },
+      {
+        crop: "Cotton Field - Block C",
+        advice: "Monitor for bollworm activity. Consider preventive spray if temperature exceeds 30°C.",
+        priority: "Watch",
+        color: "orange",
+      },
+    ],
+  })
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!formData.state || !formData.district || !formData.soilType || !formData.previousCrop) {
+      return
+    }
+
+    setIsSubmitting(true)
+
+    setTimeout(() => {
+      const newLocation = `${formData.district}, ${formData.state}`
+      const newRecommendations = [
+        {
+          crop: `${formData.previousCrop} Field - Block A`,
+          advice: `Based on ${formData.soilType.toLowerCase()} and previous ${formData.previousCrop.toLowerCase()} cultivation, apply organic compost (15kg/acre) for soil enrichment.`,
+          priority: "High Priority",
+          color: "green",
+        },
+        {
+          crop: `Recommended Next Crop - Block B`,
+          advice: `Consider planting legumes after ${formData.previousCrop.toLowerCase()} to improve soil nitrogen content in ${formData.soilType.toLowerCase()}.`,
+          priority: "Medium Priority",
+          color: "blue",
+        },
+        {
+          crop: `Soil Management - ${formData.district}`,
+          advice: `${formData.soilType} requires specific pH management. Test soil pH and adjust accordingly for optimal crop yield.`,
+          priority: "Important",
+          color: "purple",
+        },
+      ]
+
+      setDashboardData({
+        location: newLocation,
+        crops: [formData.previousCrop, "Recommended Rotation", "Soil Management"],
+        recommendations: newRecommendations,
+      })
+      setIsSubmitting(false)
+    }, 2000)
+  }
+
+  const availableDistricts = formData.state
+    ? stateDistrictData[formData.state as keyof typeof stateDistrictData] || []
+    : []
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
 
       <div className="container px-4 py-8">
+        <Card className="mb-8 border-2 border-primary/20 shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Sprout className="h-5 w-5 text-primary" />
+              Crop Advisory Input
+            </CardTitle>
+            <CardDescription>Enter your farming details to get personalized recommendations</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleFormSubmit} className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">State</label>
+                  <Select
+                    value={formData.state}
+                    onValueChange={(value) => setFormData({ ...formData, state: value, district: "" })}
+                  >
+                    <SelectTrigger className="transition-all duration-200 hover:border-primary/50 focus:border-primary">
+                      <SelectValue placeholder="Select State" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.keys(stateDistrictData).map((state) => (
+                        <SelectItem key={state} value={state} className="hover:bg-primary/10">
+                          {state}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">District</label>
+                  <Select
+                    value={formData.district}
+                    onValueChange={(value) => setFormData({ ...formData, district: value })}
+                    disabled={!formData.state}
+                  >
+                    <SelectTrigger className="transition-all duration-200 hover:border-primary/50 focus:border-primary disabled:opacity-50">
+                      <SelectValue placeholder="Select District" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableDistricts.map((district) => (
+                        <SelectItem key={district} value={district} className="hover:bg-primary/10">
+                          {district}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Soil Type</label>
+                  <Select
+                    value={formData.soilType}
+                    onValueChange={(value) => setFormData({ ...formData, soilType: value })}
+                  >
+                    <SelectTrigger className="transition-all duration-200 hover:border-primary/50 focus:border-primary">
+                      <SelectValue placeholder="Select Soil Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {soilTypes.map((soil) => (
+                        <SelectItem key={soil} value={soil} className="hover:bg-primary/10">
+                          {soil}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Previous Crop</label>
+                  <Select
+                    value={formData.previousCrop}
+                    onValueChange={(value) => setFormData({ ...formData, previousCrop: value })}
+                  >
+                    <SelectTrigger className="transition-all duration-200 hover:border-primary/50 focus:border-primary">
+                      <SelectValue placeholder="Select Previous Crop" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {cropOptions.map((crop) => (
+                        <SelectItem key={crop} value={crop} className="hover:bg-primary/10">
+                          {crop}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-4">
+                <Button
+                  type="submit"
+                  disabled={
+                    !formData.state ||
+                    !formData.district ||
+                    !formData.soilType ||
+                    !formData.previousCrop ||
+                    isSubmitting
+                  }
+                  className="min-w-[120px] transition-all duration-300 hover:scale-105"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Processing...
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Send className="h-4 w-4" />
+                      Get Recommendations
+                    </div>
+                  )}
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
             <MapPin className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">Rajasthan, India</span>
+            <span className="text-sm text-muted-foreground transition-all duration-500">{dashboardData.location}</span>
           </div>
           <h1 className="text-3xl font-bold text-balance">Good morning, Farmer!</h1>
           <p className="text-muted-foreground">Here's your personalized farming dashboard for today</p>
@@ -45,7 +305,9 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">3</div>
-              <p className="text-xs text-muted-foreground">Wheat, Rice, Cotton</p>
+              <p className="text-xs text-muted-foreground transition-all duration-500">
+                {dashboardData.crops.join(", ")}
+              </p>
             </CardContent>
           </Card>
 
@@ -131,53 +393,75 @@ export default function DashboardPage() {
                 <CardDescription>Personalized advice for your crops</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-start gap-3 p-4 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
-                  <Sprout className="h-5 w-5 text-green-600 mt-0.5" />
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-green-800 dark:text-green-200">Wheat Field - Block A</h4>
-                    <p className="text-sm text-green-700 dark:text-green-300 mt-1">
-                      Apply nitrogen fertilizer (20kg/acre). Soil moisture is optimal for nutrient absorption.
-                    </p>
-                    <Badge
-                      variant="secondary"
-                      className="mt-2 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-                    >
-                      High Priority
-                    </Badge>
+                {dashboardData.recommendations.map((rec, index) => (
+                  <div
+                    key={index}
+                    className={`flex items-start gap-3 p-4 rounded-lg border transition-all duration-500 animate-in fade-in slide-in-from-left-5 ${
+                      rec.color === "green"
+                        ? "bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800"
+                        : rec.color === "blue"
+                          ? "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-800"
+                          : rec.color === "orange"
+                            ? "bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-800"
+                            : "bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-800"
+                    }`}
+                    style={{ animationDelay: `${index * 200}ms` }}
+                  >
+                    <Sprout
+                      className={`h-5 w-5 mt-0.5 ${
+                        rec.color === "green"
+                          ? "text-green-600"
+                          : rec.color === "blue"
+                            ? "text-blue-600"
+                            : rec.color === "orange"
+                              ? "text-orange-600"
+                              : "text-purple-600"
+                      }`}
+                    />
+                    <div className="flex-1">
+                      <h4
+                        className={`font-semibold ${
+                          rec.color === "green"
+                            ? "text-green-800 dark:text-green-200"
+                            : rec.color === "blue"
+                              ? "text-blue-800 dark:text-blue-200"
+                              : rec.color === "orange"
+                                ? "text-orange-800 dark:text-orange-200"
+                                : "text-purple-800 dark:text-purple-200"
+                        }`}
+                      >
+                        {rec.crop}
+                      </h4>
+                      <p
+                        className={`text-sm mt-1 ${
+                          rec.color === "green"
+                            ? "text-green-700 dark:text-green-300"
+                            : rec.color === "blue"
+                              ? "text-blue-700 dark:text-blue-300"
+                              : rec.color === "orange"
+                                ? "text-orange-700 dark:text-orange-300"
+                                : "text-purple-700 dark:text-purple-300"
+                        }`}
+                      >
+                        {rec.advice}
+                      </p>
+                      <Badge
+                        variant="secondary"
+                        className={`mt-2 ${
+                          rec.color === "green"
+                            ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                            : rec.color === "blue"
+                              ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                              : rec.color === "orange"
+                                ? "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
+                                : "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200"
+                        }`}
+                      >
+                        {rec.priority}
+                      </Badge>
+                    </div>
                   </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800">
-                  <Droplets className="h-5 w-5 text-blue-600 mt-0.5" />
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-blue-800 dark:text-blue-200">Rice Field - Block B</h4>
-                    <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
-                      Reduce irrigation by 30%. Expected rainfall in next 2 days will provide sufficient water.
-                    </p>
-                    <Badge
-                      variant="secondary"
-                      className="mt-2 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-                    >
-                      Medium Priority
-                    </Badge>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-4 rounded-lg bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800">
-                  <Bug className="h-5 w-5 text-orange-600 mt-0.5" />
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-orange-800 dark:text-orange-200">Cotton Field - Block C</h4>
-                    <p className="text-sm text-orange-700 dark:text-orange-300 mt-1">
-                      Monitor for bollworm activity. Consider preventive spray if temperature exceeds 30°C.
-                    </p>
-                    <Badge
-                      variant="secondary"
-                      className="mt-2 bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
-                    >
-                      Watch
-                    </Badge>
-                  </div>
-                </div>
+                ))}
               </CardContent>
             </Card>
 

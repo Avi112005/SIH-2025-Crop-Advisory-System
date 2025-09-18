@@ -40,6 +40,46 @@
   --sidebar-ring: oklch(0.55 0.15 142);
 }
 
+/* Added dark mode styles with smooth transitions */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  --background: oklch(0.08 0.01 120);
+  --foreground: oklch(0.95 0.01 120);
+  --card: oklch(0.12 0.01 120);
+  --card-foreground: oklch(0.95 0.01 120);
+  --popover: oklch(0.12 0.01 120);
+  --popover-foreground: oklch(0.95 0.01 120);
+  --primary: oklch(0.6 0.18 142);
+  --primary-foreground: oklch(0.08 0.01 120);
+  --secondary: oklch(0.2 0.02 120);
+  --secondary-foreground: oklch(0.95 0.01 120);
+  --muted: oklch(0.15 0.01 120);
+  --muted-foreground: oklch(0.65 0.01 120);
+  --accent: oklch(0.75 0.15 85);
+  --accent-foreground: oklch(0.08 0.01 120);
+  --destructive: oklch(0.6 0.25 25);
+  --destructive-foreground: oklch(0.95 0.01 120);
+  --border: oklch(0.2 0.01 120);
+  --input: oklch(0.15 0.01 120);
+  --ring: oklch(0.6 0.18 142);
+  --chart-1: oklch(0.6 0.18 142);
+  --chart-2: oklch(0.75 0.15 85);
+  --chart-3: oklch(0.7 0.2 45);
+  --chart-4: oklch(0.65 0.22 220);
+  --chart-5: oklch(0.6 0.25 25);
+  --sidebar: oklch(0.1 0.01 120);
+  --sidebar-foreground: oklch(0.95 0.01 120);
+  --sidebar-primary: oklch(0.6 0.18 142);
+  --sidebar-primary-foreground: oklch(0.08 0.01 120);
+  --sidebar-accent: oklch(0.2 0.02 120);
+  --sidebar-accent-foreground: oklch(0.95 0.01 120);
+  --sidebar-border: oklch(0.2 0.01 120);
+  --sidebar-ring: oklch(0.6 0.18 142);
+}
+
 /* Updated dark mode colors for agricultural theme */
 .dark {
   --background: oklch(0.08 0.01 120);

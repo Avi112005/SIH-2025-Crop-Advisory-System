@@ -49,19 +49,15 @@ function setupEventListeners() {
     })
   })
 
-  // Theme toggle - Fixed to work properly
-  if (themeToggle) {
-    themeToggle.addEventListener("click", toggleTheme)
-  }
+  // Theme toggle
+  themeToggle.addEventListener("click", toggleTheme)
 
   // Mobile navigation toggle
-  if (navToggle) {
-    navToggle.addEventListener("click", toggleMobileNav)
-  }
+  navToggle.addEventListener("click", toggleMobileNav)
 
   // Close mobile nav when clicking outside
   document.addEventListener("click", (e) => {
-    if (navMenu && !navMenu.contains(e.target) && navToggle && !navToggle.contains(e.target)) {
+    if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
       navMenu.classList.remove("active")
     }
   })
@@ -101,7 +97,7 @@ function setupEventListeners() {
     removeBtn.addEventListener("click", removeImage)
   }
 
-  // Settings theme options - Fixed to work with theme toggle
+  // Settings theme options
   const themeOptions = document.querySelectorAll(".theme-option")
   themeOptions.forEach((option) => {
     option.addEventListener("click", (e) => {
@@ -125,8 +121,6 @@ function setupEventListeners() {
   if (regionFilter) {
     regionFilter.addEventListener("change", filterMarketData)
   }
-
-  setupLocationHandlers()
 }
 
 // Page Navigation
@@ -186,14 +180,10 @@ function setTheme(theme) {
 
   if (isDarkMode) {
     document.body.classList.add("dark")
-    if (themeToggle) {
-      themeToggle.innerHTML = '<i class="fas fa-sun"></i>'
-    }
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i>'
   } else {
     document.body.classList.remove("dark")
-    if (themeToggle) {
-      themeToggle.innerHTML = '<i class="fas fa-moon"></i>'
-    }
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>'
   }
 
   // Save preference
@@ -207,11 +197,6 @@ function setTheme(theme) {
       option.classList.add("active")
     }
   })
-
-  // Update chart colors if chart exists
-  if (priceChart) {
-    updateChartTheme()
-  }
 
   console.log(`[v0] Theme changed to: ${theme}`)
 }
@@ -252,8 +237,6 @@ function sendQuickMessage(message) {
 
 function addMessageToChat(message, sender) {
   const chatMessages = document.getElementById("chatMessages")
-  if (!chatMessages) return
-
   const messageDiv = document.createElement("div")
   messageDiv.className = `message ${sender}-message`
 
@@ -267,11 +250,7 @@ function addMessageToChat(message, sender) {
     `
 
   chatMessages.appendChild(messageDiv)
-
-  // Smooth scroll to bottom with a small delay to ensure proper rendering
-  setTimeout(() => {
-    chatMessages.scrollTop = chatMessages.scrollHeight
-  }, 100)
+  chatMessages.scrollTop = chatMessages.scrollHeight
 }
 
 function generateAIResponse(message) {
@@ -728,330 +707,6 @@ if ("serviceWorker" in navigator) {
         console.log("[v0] SW registration failed: ", registrationError)
       })
   })
-}
-
-function setupLocationHandlers() {
-  const stateSelect = document.getElementById("stateSelect")
-  const districtSelect = document.getElementById("districtSelect")
-
-  if (stateSelect) {
-    stateSelect.addEventListener("change", updateDistricts)
-  }
-}
-
-function updateDistricts() {
-  const stateSelect = document.getElementById("stateSelect")
-  const districtSelect = document.getElementById("districtSelect")
-
-  if (!stateSelect || !districtSelect) return
-
-  const selectedState = stateSelect.value
-
-  // Clear existing districts
-  districtSelect.innerHTML = '<option value="">Select District</option>'
-
-  // District data for major agricultural states
-  const districtData = {
-    "andhra-pradesh": [
-      "Anantapur",
-      "Chittoor",
-      "East Godavari",
-      "Guntur",
-      "Krishna",
-      "Kurnool",
-      "Nellore",
-      "Prakasam",
-      "Srikakulam",
-      "Visakhapatnam",
-      "Vizianagaram",
-      "West Godavari",
-      "YSR Kadapa",
-    ],
-    telangana: [
-      "Adilabad",
-      "Bhadradri Kothagudem",
-      "Hyderabad",
-      "Jagtial",
-      "Jangaon",
-      "Jayashankar",
-      "Jogulamba",
-      "Kamareddy",
-      "Karimnagar",
-      "Khammam",
-      "Komaram Bheem",
-      "Mahabubabad",
-      "Mahbubnagar",
-      "Mancherial",
-      "Medak",
-      "Medchal",
-      "Nagarkurnool",
-      "Nalgonda",
-      "Nirmal",
-      "Nizamabad",
-      "Peddapalli",
-      "Rajanna Sircilla",
-      "Rangareddy",
-      "Sangareddy",
-      "Siddipet",
-      "Suryapet",
-      "Vikarabad",
-      "Wanaparthy",
-      "Warangal Rural",
-      "Warangal Urban",
-      "Yadadri Bhuvanagiri",
-    ],
-    karnataka: [
-      "Bagalkot",
-      "Bangalore Rural",
-      "Bangalore Urban",
-      "Belgaum",
-      "Bellary",
-      "Bidar",
-      "Bijapur",
-      "Chamarajanagar",
-      "Chikkaballapur",
-      "Chikkamagaluru",
-      "Chitradurga",
-      "Dakshina Kannada",
-      "Davanagere",
-      "Dharwad",
-      "Gadag",
-      "Gulbarga",
-      "Hassan",
-      "Haveri",
-      "Kodagu",
-      "Kolar",
-      "Koppal",
-      "Mandya",
-      "Mysore",
-      "Raichur",
-      "Ramanagara",
-      "Shimoga",
-      "Tumkur",
-      "Udupi",
-      "Uttara Kannada",
-      "Yadgir",
-    ],
-    "tamil-nadu": [
-      "Ariyalur",
-      "Chennai",
-      "Coimbatore",
-      "Cuddalore",
-      "Dharmapuri",
-      "Dindigul",
-      "Erode",
-      "Kanchipuram",
-      "Kanyakumari",
-      "Karur",
-      "Krishnagiri",
-      "Madurai",
-      "Nagapattinam",
-      "Namakkal",
-      "Nilgiris",
-      "Perambalur",
-      "Pudukkottai",
-      "Ramanathapuram",
-      "Salem",
-      "Sivaganga",
-      "Thanjavur",
-      "Theni",
-      "Thoothukudi",
-      "Tiruchirappalli",
-      "Tirunelveli",
-      "Tiruppur",
-      "Tiruvallur",
-      "Tiruvannamalai",
-      "Tiruvarur",
-      "Vellore",
-      "Viluppuram",
-      "Virudhunagar",
-    ],
-    maharashtra: [
-      "Ahmednagar",
-      "Akola",
-      "Amravati",
-      "Aurangabad",
-      "Beed",
-      "Bhandara",
-      "Buldhana",
-      "Chandrapur",
-      "Dhule",
-      "Gadchiroli",
-      "Gondia",
-      "Hingoli",
-      "Jalgaon",
-      "Jalna",
-      "Kolhapur",
-      "Latur",
-      "Mumbai City",
-      "Mumbai Suburban",
-      "Nagpur",
-      "Nanded",
-      "Nandurbar",
-      "Nashik",
-      "Osmanabad",
-      "Palghar",
-      "Parbhani",
-      "Pune",
-      "Raigad",
-      "Ratnagiri",
-      "Sangli",
-      "Satara",
-      "Sindhudurg",
-      "Solapur",
-      "Thane",
-      "Wardha",
-      "Washim",
-      "Yavatmal",
-    ],
-    punjab: [
-      "Amritsar",
-      "Barnala",
-      "Bathinda",
-      "Faridkot",
-      "Fatehgarh Sahib",
-      "Fazilka",
-      "Ferozepur",
-      "Gurdaspur",
-      "Hoshiarpur",
-      "Jalandhar",
-      "Kapurthala",
-      "Ludhiana",
-      "Mansa",
-      "Moga",
-      "Muktsar",
-      "Nawanshahr",
-      "Pathankot",
-      "Patiala",
-      "Rupnagar",
-      "Sangrur",
-      "Tarn Taran",
-    ],
-    haryana: [
-      "Ambala",
-      "Bhiwani",
-      "Charkhi Dadri",
-      "Faridabad",
-      "Fatehabad",
-      "Gurgaon",
-      "Hisar",
-      "Jhajjar",
-      "Jind",
-      "Kaithal",
-      "Karnal",
-      "Kurukshetra",
-      "Mahendragarh",
-      "Mewat",
-      "Palwal",
-      "Panchkula",
-      "Panipat",
-      "Rewari",
-      "Rohtak",
-      "Sirsa",
-      "Sonipat",
-      "Yamunanagar",
-    ],
-    "uttar-pradesh": [
-      "Agra",
-      "Aligarh",
-      "Allahabad",
-      "Ambedkar Nagar",
-      "Amethi",
-      "Amroha",
-      "Auraiya",
-      "Azamgarh",
-      "Baghpat",
-      "Bahraich",
-      "Ballia",
-      "Balrampur",
-      "Banda",
-      "Barabanki",
-      "Bareilly",
-      "Basti",
-      "Bhadohi",
-      "Bijnor",
-      "Budaun",
-      "Bulandshahr",
-      "Chandauli",
-      "Chitrakoot",
-      "Deoria",
-      "Etah",
-      "Etawah",
-      "Faizabad",
-      "Farrukhabad",
-      "Fatehpur",
-      "Firozabad",
-      "Gautam Buddha Nagar",
-      "Ghaziabad",
-      "Ghazipur",
-      "Gonda",
-      "Gorakhpur",
-      "Hamirpur",
-      "Hapur",
-      "Hardoi",
-      "Hathras",
-      "Jalaun",
-      "Jaunpur",
-      "Jhansi",
-      "Kannauj",
-      "Kanpur Dehat",
-      "Kanpur Nagar",
-      "Kasganj",
-      "Kaushambi",
-      "Kheri",
-      "Kushinagar",
-      "Lalitpur",
-      "Lucknow",
-      "Maharajganj",
-      "Mahoba",
-      "Mainpuri",
-      "Mathura",
-      "Mau",
-      "Meerut",
-      "Mirzapur",
-      "Moradabad",
-      "Muzaffarnagar",
-      "Pilibhit",
-      "Pratapgarh",
-      "Raebareli",
-      "Rampur",
-      "Saharanpur",
-      "Sambhal",
-      "Sant Kabir Nagar",
-      "Shahjahanpur",
-      "Shamli",
-      "Shravasti",
-      "Siddharthnagar",
-      "Sitapur",
-      "Sonbhadra",
-      "Sultanpur",
-      "Unnao",
-      "Varanasi",
-    ],
-  }
-
-  if (districtData[selectedState]) {
-    districtData[selectedState].forEach((district) => {
-      const option = document.createElement("option")
-      option.value = district.toLowerCase().replace(/\s+/g, "-")
-      option.textContent = district
-      districtSelect.appendChild(option)
-    })
-  }
-}
-
-function updateChartTheme() {
-  if (!priceChart) return
-
-  const gridColor = isDarkMode ? "#334155" : "#e2e8f0"
-  const textColor = isDarkMode ? "#f1f5f9" : "#475569"
-
-  priceChart.options.scales.y.grid.color = gridColor
-  priceChart.options.scales.y.ticks.color = textColor
-  priceChart.options.scales.x.grid.color = gridColor
-  priceChart.options.scales.x.ticks.color = textColor
-
-  priceChart.update()
 }
 
 console.log("[v0] Smart Crop Advisory System script loaded successfully")

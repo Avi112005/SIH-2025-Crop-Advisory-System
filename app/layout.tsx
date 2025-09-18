@@ -22,7 +22,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={null}>
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={false}
+            disableTransitionOnChange={false}
+            storageKey="crop-advisor-theme"
+          >
             {children}
           </ThemeProvider>
         </Suspense>
